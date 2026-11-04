@@ -2,11 +2,37 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## プロジェクトの現状
+## プロジェクト概要
 
-2026-11-04 時点で、このディレクトリにはこのファイル以外何もありません（コード、ビルド設定、README はいずれも未作成）。そのため、ビルド・lint・テストのコマンドやアーキテクチャはまだ定まっていません。
+Web開発の学習過程、技術記事、制作実績を発信する個人ブログ兼ポートフォリオサイト。Next.js 16（App Router）、React 19、TypeScript、Tailwind CSS 4 で構築し、Vercel で公開する予定。
 
-技術スタックやコマンド、複数ファイルにまたがる設計が決まったら、この CLAUDE.md に追記してください。
+Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_modules/next/dist/docs/` の該当ガイドを確認する。AGENTS.md は `next dev` が自動で再生成するため、そのままコミットする。
+
+## コマンド
+
+- `npm run dev`: 開発サーバーを起動（http://localhost:3000）
+- `npm run lint`: ESLint を実行
+- `npm run build`: 本番ビルド（型チェックを含む）
+
+テストは未導入。
+
+## 設計方針
+
+実装は次の順で段階的に進める。各ステップの目的とコードの役割を初心者向けに解説する。
+
+1. 土台作り（完了）
+2. 共通レイアウト
+3. ブログ機能
+4. 固定ページ（トップ、プロフィール、制作実績）
+5. お問い合わせ
+6. 公開準備（SEO、表示確認、Vercel へのデプロイ）
+
+- ページは静的生成を基本とする。
+- 記事は `content/posts/` の MDX ファイルで管理し、`src/lib/posts.ts` で読み込む（`next-mdx-remote` と `gray-matter` を予定）。`draft: true` の記事は本番に表示しない。
+- 制作実績は `src/data/projects.ts` の配列で管理する。
+- お問い合わせは Formspree などの外部フォームサービスを使う。
+- 部品は `src/components/` に機能別（`layout`、`blog`、`projects`、`contact`）で置く。
+- デザインはシンプルで落ち着いた技術ブログ風とし、スマートフォン基準で作ってから PC に広げる。
 
 ## 禁止事項
 
