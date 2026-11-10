@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TagList } from "@/components/common/TagList";
 import { formatDate } from "@/lib/date";
 import type { PostMeta } from "@/lib/posts";
 
@@ -22,23 +23,5 @@ export function PostCard({ post }: { post: PostMeta }) {
       )}
       <TagList tags={post.tags} />
     </article>
-  );
-}
-
-// タグの一覧。記事詳細ページでも使う。
-export function TagList({ tags }: { tags: string[] }) {
-  if (tags.length === 0) return null;
-
-  return (
-    <ul className="mt-3 flex flex-wrap gap-2">
-      {tags.map((tag) => (
-        <li
-          key={tag}
-          className="rounded-full border border-border px-3 py-0.5 text-xs text-muted"
-        >
-          {tag}
-        </li>
-      ))}
-    </ul>
   );
 }

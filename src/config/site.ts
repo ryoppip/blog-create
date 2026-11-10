@@ -5,6 +5,7 @@ export const siteConfig = {
   name: "ryoppi's dev blog",
   description: "Web開発の学習記録、技術記事、制作したアプリケーションを発信するブログです。",
   author: "ryoppi",
+  github: "https://github.com/ryoppip",
   // フッターの著作権表示に使う年
   copyrightYear: 2026,
   // ヘッダーに表示するメニュー

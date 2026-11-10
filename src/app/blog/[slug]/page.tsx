@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MdxContent } from "@/components/blog/MdxContent";
-import { TagList } from "@/components/blog/PostCard";
+import { TagList } from "@/components/common/TagList";
 import { Container } from "@/components/layout/Container";
 import { formatDate } from "@/lib/date";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
