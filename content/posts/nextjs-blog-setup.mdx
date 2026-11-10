@@ -1,0 +1,32 @@
+---
+title: "Next.jsとMDXでブログを作る"
+date: "2026-11-11"
+description: "このブログの技術構成と、MDXで記事を管理する仕組みを紹介します。"
+tags: ["Next.js", "MDX"]
+draft: false
+---
+
+このブログは Next.js の App Router で作り、記事は MDX ファイルで管理しています。
+
+## 記事ファイルの書き方
+
+ファイルの先頭に、記事の情報を書きます。
+
+```mdx
+---
+title: "記事のタイトル"
+date: "2026-11-12"
+---
+```
+
+## コードの表示
+
+コードには色が付きます。
+
+```tsx
+export function Hello({ name }: { name: string }) {
+  return <p>こんにちは、{name}さん</p>;
+}
+```
+
+文中のコードは `npm run dev` のように表示されます。

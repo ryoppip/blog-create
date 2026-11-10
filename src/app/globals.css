@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* 記事本文を読みやすく整える prose クラスを使えるようにする */
+@plugin "@tailwindcss/typography";
 
 /* サイト全体の色。ここを変えると全ページの配色が変わる。 */
 :root {
@@ -28,4 +30,20 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.8;
+}
+
+/* 記事内のコードブロック（rehype-pretty-code が出力する部分） */
+[data-rehype-pretty-code-figure] pre {
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* 文中のコード（`npm run dev` のような部分） */
+.prose :not(pre) > code {
+  border-radius: 0.25rem;
+  background: #f0eeec;
+  padding: 0.15em 0.4em;
+  font-weight: 500;
 }

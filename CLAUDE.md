@@ -22,13 +22,17 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 
 1. 土台作り（完了）
 2. 共通レイアウト（完了）
-3. ブログ機能
+3. ブログ機能（完了）
 4. 固定ページ（トップ、プロフィール、制作実績）
 5. お問い合わせ
 6. 公開準備（SEO、表示確認、Vercel へのデプロイ）
 
 - ページは静的生成を基本とする。
-- 記事は `content/posts/` の MDX ファイルで管理し、`src/lib/posts.ts` で読み込む（`next-mdx-remote` と `gray-matter` を予定）。`draft: true` の記事は本番に表示しない。
+- 記事は `content/posts/` の MDX ファイルで管理する。`src/lib/posts.ts` が `next-mdx-remote-client/utils` の `getFrontmatter` で記事情報を読み、`src/components/blog/MdxContent.tsx` が本文を表示する（コードの色付けは `rehype-pretty-code`、本文の体裁は `@tailwindcss/typography`）。
+- `draft: true` の記事は、本番では一覧と記事ページの両方から除外する（開発中は表示する）。
+- 記事ファイルは同期処理（`readFileSync`）で読む。コンポーネント内で `await readFile()` を使うと、`cacheComponents` の事前生成で `use cache` か `<Suspense>` が必要になる。
+- MDX の変換は内部で現在時刻を読むため、`MdxContent` に `"use cache"` を付けている。外すと事前生成でエラーになる。
+- `/blog/[slug]` は `instant = false` を設定している。存在しない記事は、本番では HTTP ステータスが 200 のまま 404 ページと `noindex` が返る。本物の 404 を返すには Proxy での確認が必要。
 - 制作実績は `src/data/projects.ts` の配列で管理する。
 - お問い合わせは Formspree などの外部フォームサービスを使う。
 - 部品は `src/components/` に機能別（`layout`、`blog`、`projects`、`contact`）で置く。
