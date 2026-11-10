@@ -21,7 +21,7 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 実装は次の順で段階的に進める。各ステップの目的とコードの役割を初心者向けに解説する。
 
 1. 土台作り（完了）
-2. 共通レイアウト
+2. 共通レイアウト（完了）
 3. ブログ機能
 4. 固定ページ（トップ、プロフィール、制作実績）
 5. お問い合わせ
@@ -32,6 +32,9 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 - 制作実績は `src/data/projects.ts` の配列で管理する。
 - お問い合わせは Formspree などの外部フォームサービスを使う。
 - 部品は `src/components/` に機能別（`layout`、`blog`、`projects`、`contact`）で置く。
+- サイト名、説明、著者、ヘッダーのメニュー、著作権表示の年は `src/config/site.ts` にまとめる。
+- 色は `src/app/globals.css` の CSS 変数で定義し、`text-muted`、`border-border`、`text-accent` などの Tailwind クラスとして使う。色を直接書かない。
+- `cacheComponents` が有効なため、サーバーコンポーネントで `new Date()` などの現在時刻を使うと事前生成でエラーになる。
 - デザインはシンプルで落ち着いた技術ブログ風とし、スマートフォン基準で作ってから PC に広げる。
 
 ## 禁止事項

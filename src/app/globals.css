@@ -1,26 +1,31 @@
 @import "tailwindcss";
 
+/* サイト全体の色。ここを変えると全ページの配色が変わる。 */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9; /* 背景：ごく淡いグレー */
+  --foreground: #1c1917; /* 本文：濃いグレー */
+  --muted: #57534e; /* 補足の文字：少し薄いグレー */
+  --border: #e7e5e4; /* 区切り線 */
+  --accent: #0f766e; /* アクセント：落ち着いた青緑 */
 }
 
+/* 上の色や文字の種類を、Tailwind のクラス名（text-muted、border-border など）で使えるようにする。 */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  /* 英数字は Geist、日本語は各OSの標準フォントで表示する */
+  --font-sans:
+    var(--font-geist-sans), "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    "Yu Gothic UI", Meiryo, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  line-height: 1.8;
 }
