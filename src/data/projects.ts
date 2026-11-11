@@ -12,7 +12,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "ryoppi's dev blog",
+    title: "RYO TECH",
     description:
       "このサイトです。Web開発の学習記録と制作実績を発信する個人ブログとして作りました。記事はMDXで管理しています。",
     techs: ["Next.js", "React", "TypeScript", "Tailwind CSS", "MDX"],
