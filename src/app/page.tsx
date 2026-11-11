@@ -5,7 +5,10 @@ import { Container } from "@/components/layout/Container";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { siteConfig } from "@/config/site";
 import { featuredProjects } from "@/data/projects";
+import { pageMetadata } from "@/lib/metadata";
 import { getAllPosts } from "@/lib/posts";
+
+export const metadata = pageMetadata({ path: "/" });
 
 // トップページに表示する最新記事の件数
 const LATEST_POST_COUNT = 3;

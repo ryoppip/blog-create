@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { projects } from "@/data/projects";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Projects",
   description: "制作したアプリケーションの一覧です。",
-};
+  path: "/projects",
+});
 
 // 制作実績一覧ページ（/projects）
 export default function ProjectsPage() {

@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import { PostCard } from "@/components/blog/PostCard";
 import { Container } from "@/components/layout/Container";
+import { pageMetadata } from "@/lib/metadata";
 import { getAllPosts } from "@/lib/posts";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Blog",
   description: "技術記事と学習記録の一覧です。",
-};
+  path: "/blog",
+});
 
 // 記事一覧ページ（/blog）
 export default function BlogPage() {

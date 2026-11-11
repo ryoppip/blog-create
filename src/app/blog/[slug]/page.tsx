@@ -5,6 +5,7 @@ import { MdxContent } from "@/components/blog/MdxContent";
 import { TagList } from "@/components/common/TagList";
 import { Container } from "@/components/layout/Container";
 import { formatDate } from "@/lib/date";
+import { pageMetadata } from "@/lib/metadata";
 import { getAllPosts, getPostBySlug } from "@/lib/posts";
 
 // 実在する記事はすべて下の generateStaticParams で事前生成されるので、移動は速いまま。
@@ -26,9 +27,21 @@ export async function generateMetadata(
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  return {
+  const path = `/blog/${post.meta.slug}`;
+  const base = pageMetadata({
     title: post.meta.title,
-    description: post.meta.description,
+    description: post.meta.description || undefined,
+    path,
+  });
+
+  return {
+    ...base,
+    // SNS 用の情報を「記事」として上書きし、公開日も伝える
+    openGraph: {
+      ...base.openGraph,
+      type: "article",
+      publishedTime: post.meta.date,
+    },
   };
 }
 

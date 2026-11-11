@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
 import { siteConfig } from "@/config/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "About",
   description: `${siteConfig.author}のプロフィールです。`,
-};
+  path: "/about",
+});
 
 // 使える技術。分野ごとにまとめて表示する。
 const skills = [

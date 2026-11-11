@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { siteConfig } from "@/config/site";
+import { baseOpenGraph } from "@/lib/metadata";
 import "./globals.css";
 
 // next/font はフォントを自動で最適化して読み込む仕組み。
@@ -20,11 +21,16 @@ const geistMono = Geist_Mono({
 // ブラウザのタブや検索結果に表示される情報。
 // 各ページで title を指定すると「ページ名 | サイト名」の形になる。
 export const metadata: Metadata = {
+  // SNS 用の画像URLなどを、/blog のような相対パスで書けるようにする基準のURL
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  // SNS でシェアされたときの情報（Open Graph）の共通部分。
+  // ページごとの内容は、各ページで src/lib/metadata.ts の pageMetadata を使って設定する。
+  openGraph: { ...baseOpenGraph, type: "website" },
 };
 
 // 全ページ共通の枠。children に各ページの中身が入る。

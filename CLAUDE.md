@@ -25,7 +25,7 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 3. ブログ機能（完了）
 4. 固定ページ（トップ、プロフィール、制作実績）（完了。プロフィールの文章は仮）
 5. お問い合わせ（完了）
-6. 公開準備（SEO、表示確認、Vercel へのデプロイ）
+6. 公開準備（SEO は完了。Vercel へのデプロイは未完了）
 
 - ページは静的生成を基本とする。
 - 記事は `content/posts/` の MDX ファイルで管理する。`src/lib/posts.ts` が `next-mdx-remote-client/utils` の `getFrontmatter` で記事情報を読み、`src/components/blog/MdxContent.tsx` が本文を表示する（コードの色付けは `rehype-pretty-code`、本文の体裁は `@tailwindcss/typography`）。
@@ -38,6 +38,9 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 - お問い合わせは Google フォームを `src/app/contact/page.tsx` に iframe で埋め込む。埋め込み先の高さは自動調整できないため `FORM_HEIGHT` で指定している。
 - 部品は `src/components/` に機能別（`layout`、`blog`、`projects`、`contact`）で置く。
 - サイト名、説明、著者、ヘッダーのメニュー、著作権表示の年は `src/config/site.ts` にまとめる。
+- サイトの URL（`siteConfig.url`）は、Vercel が自動で設定する `VERCEL_PROJECT_PRODUCTION_URL` から作る。未設定の手元では `http://localhost:3000` になる。
+- ページのメタデータは `src/lib/metadata.ts` の `pageMetadata` で作る。各ページで設定しないと、共通レイアウトのサイト名が全ページの SNS 用タイトル（`og:title`）になる。
+- `src/app/sitemap.ts` と `src/app/robots.ts` は、記事一覧と `siteConfig.url` から自動で作られる。
 - 色は `src/app/globals.css` の CSS 変数で定義し、`text-muted`、`border-border`、`text-accent` などの Tailwind クラスとして使う。色を直接書かない。
 - `cacheComponents` が有効なため、サーバーコンポーネントで `new Date()` などの現在時刻を使うと事前生成でエラーになる。
 - デザインはシンプルで落ち着いた技術ブログ風とし、スマートフォン基準で作ってから PC に広げる。

@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/layout/Container";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Contact",
   description: "お問い合わせフォームです。",
-};
+  path: "/contact",
+});
 
 // Google フォームのURL。フォームを作り直したときは、ここを新しいURLに変える。
 const FORM_URL =
