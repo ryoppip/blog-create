@@ -21,7 +21,9 @@ export function pageMetadata({
   path,
 }: PageMetadataInput): Metadata {
   return {
-    title,
+    // title を undefined のまま渡すと「タイトルなし」として扱われ、<title> が消えてしまう。
+    // そのため、指定されたときだけ設定し、省略時は共通レイアウトのサイト名が使われるようにする。
+    ...(title && { title }),
     description,
     alternates: { canonical: path },
     openGraph: {

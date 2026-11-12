@@ -25,7 +25,7 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 3. ブログ機能（完了）
 4. 固定ページ（トップ、プロフィール、制作実績）（完了。プロフィールの文章は仮）
 5. お問い合わせ（完了）
-6. 公開準備（SEO は完了。Vercel へのデプロイは未完了）
+6. 公開準備（完了。https://blog-create-seven.vercel.app/ で公開中。`main` へのプッシュで Vercel が自動デプロイする）
 
 - ページは静的生成を基本とする。
 - 記事は `content/posts/` の MDX ファイルで管理する。`src/lib/posts.ts` が `next-mdx-remote-client/utils` の `getFrontmatter` で記事情報を読み、`src/components/blog/MdxContent.tsx` が本文を表示する（コードの色付けは `rehype-pretty-code`、本文の体裁は `@tailwindcss/typography`）。
