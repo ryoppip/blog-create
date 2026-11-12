@@ -2,9 +2,12 @@ import { MDXRemote } from "next-mdx-remote-client/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { Options as PrettyCodeOptions } from "rehype-pretty-code";
 
-// コードの色付けの設定。テーマは明るい背景に合う github-light を使う。
+// コードの色付けの設定。ライト用とダーク用の2つの配色を出力し、
+// どちらを使うかは globals.css が表示モードに合わせて切り替える。
 const prettyCodeOptions: PrettyCodeOptions = {
-  theme: "github-light",
+  theme: { light: "github-light", dark: "github-dark" },
+  // 背景色は配色のものを使わず、globals.css の --code-bg を使う
+  keepBackground: false,
 };
 
 // MDX の本文を HTML に変換して表示する部品。
@@ -15,7 +18,8 @@ export async function MdxContent({ source }: { source: string }) {
   "use cache";
 
   return (
-    <div className="prose prose-stone max-w-none prose-headings:tracking-tight prose-a:text-accent prose-code:before:content-none prose-code:after:content-none">
+    // 本文の色は globals.css の .prose で、このサイトの色のルールに合わせている
+    <div className="prose max-w-none prose-code:before:content-none prose-code:after:content-none">
       <MDXRemote
         source={source}
         options={{

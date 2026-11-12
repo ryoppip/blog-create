@@ -41,7 +41,10 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 - サイトの URL（`siteConfig.url`）は、Vercel が自動で設定する `VERCEL_PROJECT_PRODUCTION_URL` から作る。未設定の手元では `http://localhost:3000` になる。
 - ページのメタデータは `src/lib/metadata.ts` の `pageMetadata` で作る。各ページで設定しないと、共通レイアウトのサイト名が全ページの SNS 用タイトル（`og:title`）になる。
 - `src/app/sitemap.ts` と `src/app/robots.ts` は、記事一覧と `siteConfig.url` から自動で作られる。
-- 色は `src/app/globals.css` の CSS 変数で定義し、`text-muted`、`border-border`、`text-accent` などの Tailwind クラスとして使う。色を直接書かない。
+- 色は `src/app/globals.css` の CSS 変数で定義し、`bg-surface`、`text-muted`、`border-border`、`text-accent` などの Tailwind クラスとして使う。色を直接書かない（例外は Google フォームを囲む白い枠のみ）。
+- ダークモード：`html` の `data-theme`（`light`/`dark`）で切り替える。未設定のときは OS の設定に従う。ちらつき防止のスクリプトは `src/lib/theme.ts`、切り替えボタンは `src/components/layout/ThemeToggle.tsx`。Tailwind の `dark:` クラスは `globals.css` の `@custom-variant dark` で同じ条件に合わせている。
+- 記事本文（`.prose`）とコードの色も `globals.css` で CSS 変数に合わせている。コードはライト用（github-light）とダーク用（github-dark）の2配色を出力し、CSS で切り替える。
+- フォントは英数字が Geist、日本語が Noto Sans JP（どちらも `next/font`）。
 - `cacheComponents` が有効なため、サーバーコンポーネントで `new Date()` などの現在時刻を使うと事前生成でエラーになる。
 - デザインはシンプルで落ち着いた技術ブログ風とし、スマートフォン基準で作ってから PC に広げる。
 

@@ -2,48 +2,170 @@
 /* 記事本文を読みやすく整える prose クラスを使えるようにする */
 @plugin "@tailwindcss/typography";
 
-/* サイト全体の色。ここを変えると全ページの配色が変わる。 */
-:root {
-  --background: #fafaf9; /* 背景：ごく淡いグレー */
-  --foreground: #1c1917; /* 本文：濃いグレー */
-  --muted: #57534e; /* 補足の文字：少し薄いグレー */
-  --border: #e7e5e4; /* 区切り線 */
-  --accent: #0f766e; /* アクセント：落ち着いた青緑 */
+/* Tailwind の dark: クラス（例：dark:hidden）を、このサイトのダークモードで使えるようにする。
+   ボタンでダークを選んだとき、またはボタンで何も選んでおらず OS がダークのときに有効になる。 */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
 }
 
-/* 上の色や文字の種類を、Tailwind のクラス名（text-muted、border-border など）で使えるようにする。 */
+/* ===== 色のルール =====
+   ここで色に名前を付け、各部品では名前で使う。色を変えたいときはここだけ直す。 */
+
+/* ライトモード（標準） */
+:root {
+  color-scheme: light;
+  --background: #fafafa; /* ページの背景 */
+  --surface: #ffffff; /* カードなど、背景から一段浮かせる面 */
+  --foreground: #18181b; /* 本文 */
+  --muted: #5f5f68; /* 日付や説明文などの補足 */
+  --border: #e4e4e7; /* 区切り線や枠 */
+  --accent: #0f766e; /* リンクなどのアクセント（落ち着いた青緑） */
+  --accent-soft: #e6f4f1; /* アクセントの薄い背景 */
+  --code-bg: #f4f4f5; /* コードの背景 */
+}
+
+/* ダークモード：ボタンでダークを選んだとき */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #0b0b0d;
+  --surface: #131316;
+  --foreground: #f4f4f5;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --accent: #2dd4bf;
+  --accent-soft: #10302c;
+  --code-bg: #18181b;
+}
+
+/* ダークモード：ボタンで何も選んでおらず、OS の設定がダークのとき */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --background: #0b0b0d;
+    --surface: #131316;
+    --foreground: #f4f4f5;
+    --muted: #a1a1aa;
+    --border: #27272a;
+    --accent: #2dd4bf;
+    --accent-soft: #10302c;
+    --code-bg: #18181b;
+  }
+}
+
+/* 上の色とフォントを、Tailwind のクラス名（bg-surface、text-muted など）で使えるようにする */
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  /* 英数字は Geist、日本語は各OSの標準フォントで表示する */
-  --font-sans:
-    var(--font-geist-sans), "Hiragino Kaku Gothic ProN", "Hiragino Sans",
-    "Yu Gothic UI", Meiryo, sans-serif;
+  --color-accent-soft: var(--accent-soft);
+  /* 英数字は Geist、日本語は Noto Sans JP で表示する */
+  --font-sans: var(--font-geist-sans), var(--font-noto-sans-jp), sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
+
+/* ===== 文字の基本ルール ===== */
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  line-height: 1.8;
+  line-height: 1.85;
+  /* 日本語の文章は、文字の間隔を少し空けると読みやすくなる */
+  letter-spacing: 0.02em;
 }
 
-/* 記事内のコードブロック（rehype-pretty-code が出力する部分） */
+/* 見出しは、かなや句読点の余分な隙間を詰めて引き締める（palt） */
+h1,
+h2,
+h3 {
+  font-feature-settings: "palt";
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* 文章の最後の行に1文字だけ残るような、不自然な改行を減らす */
+p {
+  text-wrap: pretty;
+}
+
+/* マウスで文字を選んだときの色 */
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+/* キーボード操作で選択中の場所を分かりやすくする */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ===== 記事本文（prose）の色 =====
+   @tailwindcss/typography の色を、このサイトの色のルールに合わせる。
+   ダークモードでも自動で切り替わる。 */
+.prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: var(--foreground);
+  --tw-prose-lead: var(--muted);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--foreground);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-hr: var(--border);
+  --tw-prose-quotes: var(--foreground);
+  --tw-prose-quote-borders: var(--border);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--foreground);
+  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-bg: var(--code-bg);
+  --tw-prose-th-borders: var(--border);
+  --tw-prose-td-borders: var(--border);
+  line-height: 1.95;
+}
+
+/* ===== 記事内のコード ===== */
+
+/* コードブロック（rehype-pretty-code が出力する部分） */
 [data-rehype-pretty-code-figure] pre {
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--code-bg);
   font-size: 0.875rem;
-  line-height: 1.7;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+/* コードの文字色は、ライト用とダーク用の2つの配色を表示モードに合わせて切り替える */
+[data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-light);
+}
+:root[data-theme="dark"] [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-dark);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-rehype-pretty-code-figure] code span {
+    color: var(--shiki-dark);
+  }
 }
 
 /* 文中のコード（`npm run dev` のような部分） */
 .prose :not(pre) > code {
-  border-radius: 0.25rem;
-  background: #f0eeec;
-  padding: 0.15em 0.4em;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background: var(--code-bg);
+  padding: 0.1em 0.4em;
+  font-size: 0.875em;
   font-weight: 500;
+  letter-spacing: 0;
 }

@@ -4,7 +4,7 @@ import type { Project } from "@/data/projects";
 // 制作実績1件分のカード。
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="rounded-lg border border-border bg-white p-6">
+    <article className="rounded-lg border border-border bg-surface p-6">
       <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
       <p className="mt-2 text-sm text-muted">{project.description}</p>
       <TagList tags={project.techs} />
