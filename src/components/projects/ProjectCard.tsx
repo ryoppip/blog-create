@@ -4,7 +4,8 @@ import type { Project } from "@/data/projects";
 // 制作実績1件分のカード。
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="rounded-lg border border-border bg-surface p-6">
+    // 左端の山吹色の線は、藍染の配色の特徴（差し色）
+    <article className="rounded border border-l-[3px] border-border border-l-accent-2 bg-surface p-6">
       <h3 className="text-lg font-semibold tracking-tight">{project.title}</h3>
       <p className="mt-2 text-sm text-muted">{project.description}</p>
       <TagList tags={project.techs} />

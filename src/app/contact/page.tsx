@@ -28,7 +28,7 @@ export default function ContactPage() {
       {/* iframe は、ほかのサイトのページを枠の中に表示するタグ。
           ?embedded=true を付けると、Google フォームが埋め込み用の表示になる。
           Google フォームはダークモードに対応していないため、枠の背景は常に白にしている。 */}
-      <div className="mt-10 overflow-hidden rounded-lg border border-border bg-white">
+      <div className="mt-10 overflow-hidden rounded border border-border bg-white">
         <iframe
           src={`${FORM_URL}?embedded=true`}
           title="お問い合わせフォーム"

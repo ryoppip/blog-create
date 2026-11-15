@@ -18,44 +18,49 @@
 /* ===== 色のルール =====
    ここで色に名前を付け、各部品では名前で使う。色を変えたいときはここだけ直す。 */
 
+/* 配色のテーマは「藍染」。日本の藍色を主役に、からし色（山吹）を差し色にしている。 */
+
 /* ライトモード（標準） */
 :root {
   color-scheme: light;
-  --background: #fafafa; /* ページの背景 */
+  --background: #f4f5f7; /* ページの背景：わずかに青みのある淡いグレー */
   --surface: #ffffff; /* カードなど、背景から一段浮かせる面 */
-  --foreground: #18181b; /* 本文 */
-  --muted: #5f5f68; /* 日付や説明文などの補足 */
-  --border: #e4e4e7; /* 区切り線や枠 */
-  --accent: #0f766e; /* リンクなどのアクセント（落ち着いた青緑） */
-  --accent-soft: #e6f4f1; /* アクセントの薄い背景 */
-  --code-bg: #f4f4f5; /* コードの背景 */
+  --foreground: #14213a; /* 本文：藍に近い濃紺 */
+  --muted: #56617a; /* 日付や説明文などの補足 */
+  --border: #dde1e8; /* 区切り線や枠 */
+  --accent: #1f4e79; /* 藍：リンクやボタンなどの主な色 */
+  --accent-2: #c08a1e; /* 山吹：線や印に使う差し色（文字には使わない） */
+  --accent-soft: #e3eaf3; /* 藍の薄い背景（タグなど） */
+  --code-bg: #eef1f5; /* コードの背景 */
 }
 
 /* ダークモード：ボタンでダークを選んだとき */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #0b0b0d;
-  --surface: #131316;
-  --foreground: #f4f4f5;
-  --muted: #a1a1aa;
-  --border: #27272a;
-  --accent: #2dd4bf;
-  --accent-soft: #10302c;
-  --code-bg: #18181b;
+  --background: #0d1526;
+  --surface: #131d33;
+  --foreground: #eef1f7;
+  --muted: #a0aac0;
+  --border: #24304a;
+  --accent: #86b3e0;
+  --accent-2: #e0b04a;
+  --accent-soft: #1c2c4a;
+  --code-bg: #101a2e;
 }
 
 /* ダークモード：ボタンで何も選んでおらず、OS の設定がダークのとき */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --background: #0b0b0d;
-    --surface: #131316;
-    --foreground: #f4f4f5;
-    --muted: #a1a1aa;
-    --border: #27272a;
-    --accent: #2dd4bf;
-    --accent-soft: #10302c;
-    --code-bg: #18181b;
+    --background: #0d1526;
+    --surface: #131d33;
+    --foreground: #eef1f7;
+    --muted: #a0aac0;
+    --border: #24304a;
+    --accent: #86b3e0;
+    --accent-2: #e0b04a;
+    --accent-soft: #1c2c4a;
+    --code-bg: #101a2e;
   }
 }
 
@@ -67,6 +72,7 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
   --color-accent-soft: var(--accent-soft);
   /* 英数字は Geist、日本語は Noto Sans JP で表示する */
   --font-sans: var(--font-geist-sans), var(--font-noto-sans-jp), sans-serif;
@@ -139,7 +145,7 @@ p {
 /* コードブロック（rehype-pretty-code が出力する部分） */
 [data-rehype-pretty-code-figure] pre {
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: 0.25rem;
   background: var(--code-bg);
   font-size: 0.875rem;
   line-height: 1.75;
@@ -162,7 +168,7 @@ p {
 /* 文中のコード（`npm run dev` のような部分） */
 .prose :not(pre) > code {
   border: 1px solid var(--border);
-  border-radius: 0.375rem;
+  border-radius: 0.2rem;
   background: var(--code-bg);
   padding: 0.1em 0.4em;
   font-size: 0.875em;

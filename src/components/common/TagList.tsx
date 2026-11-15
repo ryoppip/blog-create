@@ -7,7 +7,7 @@ export function TagList({ tags }: { tags: readonly string[] }) {
       {tags.map((tag) => (
         <li
           key={tag}
-          className="rounded-full border border-border px-3 py-0.5 text-xs text-muted"
+          className="rounded-sm bg-accent-soft px-2.5 py-0.5 text-xs text-accent"
         >
           {tag}
         </li>
