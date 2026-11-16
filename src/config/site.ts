@@ -12,7 +12,7 @@ export const siteConfig = {
   description: "Web開発の学習記録、技術記事、制作したアプリケーションを発信するブログです。",
   // トップページの縦書きのキャッチコピー
   tagline: "学びを、コードと言葉で残す。",
-  author: "kano ryoya",
+  author: "Ryoya",
   role: "Web Developer（学習中）",
   // トップページに表示する得意分野
   focus: "Next.js / TypeScript",
