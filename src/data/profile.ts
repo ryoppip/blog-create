@@ -14,5 +14,5 @@ export const profile = {
   ],
   // 学んでいること（/about ページで箇条書きにする）
   learning: ["Next.js と React でのWebアプリケーション開発", "TypeScript による型を使った開発"],
-  isPlaceholder: true, // 本当の内容に書き換えたら false にする（「仮の内容です」の表示が消える）
+  isPlaceholder: false, // true にすると「プロフィールの文章は仮の内容です」と表示する
 };
