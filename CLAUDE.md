@@ -27,27 +27,36 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 5. お問い合わせ（完了）
 6. 公開準備（完了。https://blog-create-seven.vercel.app/ で公開中。`main` へのプッシュで Vercel が自動デプロイする）
 
-- ページは静的生成を基本とする。
-- 記事は `content/posts/` の MDX ファイルで管理する。`src/lib/posts.ts` が `next-mdx-remote-client/utils` の `getFrontmatter` で記事情報を読み、`src/components/blog/MdxContent.tsx` が本文を表示する（コードの色付けは `rehype-pretty-code`、本文の体裁は `@tailwindcss/typography`）。
+### デザイン
+
+- 雑誌風の「文字組みで見せる」デザイン。大きな欧文の見出し（`SectionHeading`：英語＋小さな日本語）、細い区切り線、余白で整理し、カードやサムネイル画像は使わない。
+- 配色のテーマは「藍染」：藍（`accent`）が主な色、山吹（`accent-2`）は線や印だけに使う差し色（コントラストが足りないため文字には使わない）。画面幅いっぱいの藍色はトップページの制作実績の欄（`WorksBand`）だけに使う。
+- トップページのロゴの背景はキャンプの景色（`src/components/home/CampScene.tsx`）。ライトモードは朝（朝日、煙）、ダークモードは夜（月、星、光るテント、火の粉）。木々の形は `src/lib/trees.ts` でビルド時に計算し、星と火の粉は canvas、奥行きはスクロールに合わせて動かす。
+- 色はすべて `src/app/globals.css` の CSS 変数で定義する（キャンプの景色の色も `--camp-〇〇` などで定義）。Tailwind クラス（`text-muted`、`border-border` など）か、CSS Modules の `var(--〇〇)` で使い、部品に色を直接書かない。例外は Google フォームを囲む白い枠と、常に暗い背景のコードブロック内の文字色。
+- 部品の見た目は、同じフォルダの CSS Modules（`〇〇.module.css`）に書く。小さな調整は Tailwind クラスでよい。
+- フォント（すべて `next/font`）：欧文の見出しが Inter Tight（`font-latin`）、和文の見出しが Zen Kaku Gothic New（`font-display`）、本文が Noto Sans JP（`font-sans`）、コードとラベルが JetBrains Mono（`font-mono`）。
+- ダークモード：`html` の `data-theme`（`light`/`dark`）で切り替える。未設定のときは OS の設定に従う。ちらつき防止のスクリプトは `src/lib/theme.ts`、切り替えボタンは `src/components/layout/ThemeToggle.tsx`。Tailwind の `dark:` クラスは `globals.css` の `@custom-variant dark` で同じ条件に合わせている。canvas の色は CSS 変数（`--spark`、`--stars`）を読んで切り替える。
+- 動き：スクロールで現れる演出は `class="reveal"`（`globals.css`、スクロール連動のため非対応ブラウザでは普通に表示）。すべての動きは `prefers-reduced-motion` で止まるようにする。
+
+### 記事
+
+- 記事は `content/posts/` の MDX ファイルで管理する。`src/lib/posts.ts` が記事情報（`getFrontmatter`）、読了時間、目次（`getHeadings`）、次の記事（`getNextPost`）、タグの件数を作り、`src/components/blog/MdxContent.tsx` が本文を表示する。
+- 大見出し（`##`）には `src/lib/rehype-section-ids.ts` が `sec-1`、`sec-2`…の id を付け、`getHeadings` も同じ順で id を作る。番号「01」「02」は `globals.css` の CSS カウンターで表示する。どちらもコードブロック内の行は数えない。
+- コードは常に暗い背景で表示し、配色は github-dark の1つだけ。` ```tsx title="Hello.tsx" ` のように書くとファイル名が出る。コピーボタンは `CodeBlock`（MDX の `<pre>` を置き換え）。
 - `draft: true` の記事は、本番では一覧と記事ページの両方から除外する（開発中は表示する）。
 - 記事ファイルは同期処理（`readFileSync`）で読む。コンポーネント内で `await readFile()` を使うと、`cacheComponents` の事前生成で `use cache` か `<Suspense>` が必要になる。
 - MDX の変換は内部で現在時刻を読むため、`MdxContent` に `"use cache"` を付けている。外すと事前生成でエラーになる。
-- `/blog/[slug]` は `instant = false` を設定している。存在しない記事は、本番では HTTP ステータスが 200 のまま 404 ページと `noindex` が返る。本物の 404 を返すには Proxy での確認が必要。
-- 制作実績は `src/data/projects.ts` の配列で管理する。`featured: true` の実績はトップページにも表示する。
-- タグや使用技術のラベルは `src/components/common/TagList.tsx` を共通で使う。
+- `/blog/[slug]` は `instant = false` を設定している。Vercel 上では、存在しない記事に HTTP 404 が返ることを確認済み（手元の `next start` では 200 と `noindex` になる）。
+
+### そのほか
+
+- ページは静的生成を基本とする。`cacheComponents` が有効なため、サーバーコンポーネントで `new Date()` などの現在時刻を使うと事前生成でエラーになる。
+- サイト名、キャッチコピー、著者、得意分野、メニューは `src/config/site.ts`、プロフィールの内容は `src/data/profile.ts`（仮の内容。書き換えたら `isPlaceholder` を `false` にする）、制作実績は `src/data/projects.ts`（`featured: true` はトップページにも表示）にまとめる。
 - お問い合わせは Google フォームを `src/app/contact/page.tsx` に iframe で埋め込む。埋め込み先の高さは自動調整できないため `FORM_HEIGHT` で指定している。
-- 部品は `src/components/` に機能別（`layout`、`blog`、`projects`、`contact`）で置く。
-- サイト名、説明、著者、ヘッダーのメニュー、著作権表示の年は `src/config/site.ts` にまとめる。
 - サイトの URL（`siteConfig.url`）は、Vercel が自動で設定する `VERCEL_PROJECT_PRODUCTION_URL` から作る。未設定の手元では `http://localhost:3000` になる。
 - ページのメタデータは `src/lib/metadata.ts` の `pageMetadata` で作る。各ページで設定しないと、共通レイアウトのサイト名が全ページの SNS 用タイトル（`og:title`）になる。
 - `src/app/sitemap.ts` と `src/app/robots.ts` は、記事一覧と `siteConfig.url` から自動で作られる。
-- 配色のテーマは「藍染」：藍（`accent`）が主な色、山吹（`accent-2`）は線や印だけに使う差し色（コントラストが足りないため文字には使わない）。角の丸みは小さめ（`rounded` 程度）にそろえる。
-- 色は `src/app/globals.css` の CSS 変数で定義し、`bg-surface`、`text-muted`、`border-border`、`text-accent` などの Tailwind クラスとして使う。色を直接書かない（例外は Google フォームを囲む白い枠のみ）。
-- ダークモード：`html` の `data-theme`（`light`/`dark`）で切り替える。未設定のときは OS の設定に従う。ちらつき防止のスクリプトは `src/lib/theme.ts`、切り替えボタンは `src/components/layout/ThemeToggle.tsx`。Tailwind の `dark:` クラスは `globals.css` の `@custom-variant dark` で同じ条件に合わせている。
-- 記事本文（`.prose`）とコードの色も `globals.css` で CSS 変数に合わせている。コードはライト用（github-light）とダーク用（github-dark）の2配色を出力し、CSS で切り替える。
-- フォントは英数字が Geist、日本語が Noto Sans JP（どちらも `next/font`）。
-- `cacheComponents` が有効なため、サーバーコンポーネントで `new Date()` などの現在時刻を使うと事前生成でエラーになる。
-- デザインはシンプルで落ち着いた技術ブログ風とし、スマートフォン基準で作ってから PC に広げる。
+- 開発サーバーでは Google Fonts への接続に失敗し、代わりのフォントで表示されることがある（本番ビルドでは正しく組み込まれる）。
 
 ## 禁止事項
 

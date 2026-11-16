@@ -27,7 +27,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label="ライトモードとダークモードを切り替える"
-      className="flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-accent-soft hover:text-foreground"
+      className="flex size-[38px] items-center justify-center rounded-full text-foreground transition-colors hover:bg-paper"
     >
       {/* どちらのアイコンを見せるかは CSS（dark: クラス）で決める。
           サーバーとブラウザで表示がずれないよう、JavaScript では切り替えない。 */}

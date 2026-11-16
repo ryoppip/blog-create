@@ -4,8 +4,12 @@
 export type Project = {
   title: string;
   description: string;
+  kind: string; // 種類（例：個人ブログ兼ポートフォリオ）
+  role: string; // 担当した範囲
   techs: string[]; // 使用技術
-  github?: string; // ソースコードのURL（? は「書かなくてもよい」という意味）
+  year: number; // 制作した年
+  host?: string; // 公開先（? は「書かなくてもよい」という意味）
+  github?: string; // ソースコードのURL
   url?: string; // 公開先のURL
   featured?: boolean; // true にするとトップページにも表示する
 };
@@ -14,8 +18,13 @@ export const projects: Project[] = [
   {
     title: "RYO TECH",
     description:
-      "このサイトです。Web開発の学習記録と制作実績を発信する個人ブログとして作りました。記事はMDXで管理しています。",
+      "このサイトです。Web開発の学習記録と制作実績を発信する個人ブログとして、設計から公開まで自分で作りました。",
+    kind: "個人ブログ兼ポートフォリオ",
+    role: "設計、デザイン、実装、公開",
     techs: ["Next.js", "React", "TypeScript", "Tailwind CSS", "MDX"],
+    year: 2026,
+    host: "Vercel",
+    url: "https://blog-create-seven.vercel.app/",
     github: "https://github.com/ryoppip/blog-create",
     featured: true,
   },

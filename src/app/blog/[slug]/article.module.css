@@ -1,0 +1,165 @@
+/* 記事ページのレイアウト */
+
+.article {
+  padding-block: 40px 96px;
+}
+
+.back {
+  display: inline-flex;
+  gap: 8px;
+  font-family: var(--font-latin);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--foreground);
+}
+.back span {
+  transition: transform 0.25s;
+}
+.back:hover span {
+  transform: translateX(-4px);
+}
+
+.head {
+  display: grid;
+  gap: 24px;
+  max-width: 960px;
+  padding-top: 40px;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tags span {
+  padding: 2px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12px;
+}
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* 公開日、読了時間、著者を表の形で並べる */
+.meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 48px 0 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--border);
+}
+.meta div {
+  display: grid;
+  gap: 2px;
+  padding: 14px 0;
+}
+.meta div + div {
+  padding-left: 20px;
+  border-left: 1px solid var(--border);
+}
+.meta dt {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.meta dd {
+  margin: 0;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+/* 左に目次、右に本文 */
+.body {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 680px);
+  align-items: start;
+  gap: 72px;
+  padding-top: 56px;
+}
+
+/* 記事の最後：著者と次の記事 */
+.end {
+  display: grid;
+  margin-top: 80px;
+  border-top: 1px solid var(--rule);
+}
+.author {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding-block: 24px;
+  border-bottom: 1px solid var(--border);
+}
+.author strong {
+  font-family: var(--font-latin);
+  font-size: 18px;
+  color: var(--foreground);
+}
+.author p {
+  margin-top: 2px;
+  font-size: 14.5px;
+  color: var(--muted);
+}
+.authorLink {
+  display: inline-flex;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--foreground);
+}
+.next {
+  display: grid;
+  gap: 6px;
+  padding-block: 32px;
+}
+.nextLabel {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.nextTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 32px);
+  transition: color 0.2s;
+}
+.nextTitle span {
+  font-family: var(--font-latin);
+  transition: transform 0.25s;
+}
+.next:hover .nextTitle {
+  color: var(--accent);
+}
+.next:hover .nextTitle span {
+  transform: translateX(6px);
+}
+
+@media (max-width: 960px) {
+  .body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .meta {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .meta div:nth-child(3) {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+}

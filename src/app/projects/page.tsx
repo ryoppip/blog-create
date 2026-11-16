@@ -1,10 +1,11 @@
+import { SectionHeading } from "@/components/common/SectionHeading";
 import { Container } from "@/components/layout/Container";
-import { ProjectCard } from "@/components/projects/ProjectCard";
+import { ProjectFeature } from "@/components/projects/ProjectFeature";
 import { projects } from "@/data/projects";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
-  title: "Projects",
+  title: "Works",
   description: "制作したアプリケーションの一覧です。",
   path: "/projects",
 });
@@ -13,13 +14,12 @@ export const metadata = pageMetadata({
 export default function ProjectsPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
-      <p className="mt-4 text-muted">制作したアプリケーション</p>
-
-      {/* スマートフォンでは1列、画面が広いときは2列に並べる */}
-      <div className="mt-10 grid gap-6 sm:grid-cols-2">
+      <SectionHeading as="h1" title="Works" ja="制作実績" />
+      <div className="grid gap-20">
         {projects.map((project) => (
-          <ProjectCard key={project.title} project={project} />
+          <div key={project.title} className="reveal">
+            <ProjectFeature project={project} tone="plain" headingLevel="h2" />
+          </div>
         ))}
       </div>
     </Container>

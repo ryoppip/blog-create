@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
+import { Inter_Tight, JetBrains_Mono, Noto_Sans_JP, Zen_Kaku_Gothic_New } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { siteConfig } from "@/config/site";
@@ -9,22 +9,22 @@ import "./globals.css";
 
 // next/font はフォントを自動で最適化して読み込む仕組み。
 // variable で指定した名前の CSS 変数として globals.css から使う。
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+// 欧文の見出し（大きなロゴ、Journal などの見出し）
+const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["latin"] });
+
+// 和文の見出し（記事のタイトルなど）
+const zenKaku = Zen_Kaku_Gothic_New({
+  variable: "--font-zen-kaku",
   subsets: ["latin"],
+  weight: ["500", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// 本文。日本語の文字は数が多いため、ページで使われている文字の分だけが自動で読み込まれる。
+const notoSansJp = Noto_Sans_JP({ variable: "--font-noto-sans-jp", subsets: ["latin"] });
 
-// 日本語フォント。日本語の文字は数が多いため、ページで使われている文字の分だけが自動で読み込まれる。
-// 先読み（preload）は英数字部分だけにして、最初の表示を重くしないようにしている。
-const notoSansJp = Noto_Sans_JP({
-  variable: "--font-noto-sans-jp",
-  subsets: ["latin"],
-});
+// コード、日付などの小さなラベル
+const jetbrainsMono = JetBrains_Mono({ variable: "--font-jetbrains-mono", subsets: ["latin"] });
 
 // ブラウザのタブや検索結果に表示される情報。
 // 各ページで title を指定すると「ページ名 | サイト名」の形になる。
@@ -48,7 +48,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     // サーバーで作った HTML と違っても警告を出さないようにする
     <html
       lang="ja"
-      className={`${geistSans.variable} ${geistMono.variable} ${notoSansJp.variable} h-full antialiased`}
+      className={`${interTight.variable} ${zenKaku.variable} ${notoSansJp.variable} ${jetbrainsMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

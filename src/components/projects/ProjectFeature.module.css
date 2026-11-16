@@ -1,0 +1,111 @@
+/* 制作実績1件分。トップページの藍色の欄（band）と、/projects ページ（plain）の両方で使う。
+   文字や線の色は下の --w-〇〇 で切り替える */
+
+.band {
+  --w-fg: var(--band-foreground);
+  --w-muted: var(--band-muted);
+  --w-line: var(--band-line);
+}
+.plain {
+  --w-fg: var(--foreground);
+  --w-muted: var(--muted);
+  --w-line: var(--border);
+}
+
+.work {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 56px;
+  padding-top: 48px;
+  color: var(--w-fg);
+}
+.kicker {
+  display: block;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--w-muted);
+}
+.title {
+  margin: 0;
+  font-family: var(--font-latin);
+  font-weight: 800;
+  font-size: clamp(44px, 6.4vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  color: var(--w-fg);
+}
+.description {
+  max-width: 32em;
+  margin-top: 28px;
+  opacity: 0.9;
+}
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+/* 枠線だけのボタン。乗せると色が反転する */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--w-fg);
+  border-radius: 999px;
+  font-family: var(--font-latin);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--w-fg);
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.band .pill:hover {
+  background: var(--band-foreground);
+  color: var(--band);
+}
+.plain .pill:hover {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+/* 種類、使用技術、担当、公開先の一覧 */
+.details {
+  display: grid;
+  margin: 0;
+}
+.details div {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: 16px;
+  padding-block: 14px;
+  border-top: 1px solid var(--w-line);
+}
+.details div:last-child {
+  border-bottom: 1px solid var(--w-line);
+}
+.details dt {
+  padding-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--w-muted);
+}
+.details dd {
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .work {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pill {
+    transition: none;
+  }
+}

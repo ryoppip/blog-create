@@ -1,0 +1,154 @@
+/* ヘッダーの見た目。CSS Modules なので、ここで付けたクラス名はこの部品の中だけで使われる */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--header-bg);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  /* 下へスクロールしたときに、上へ滑らかに隠れる */
+  transition: transform 0.4s cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+.hidden {
+  transform: translateY(-100%);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 68px;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* 左上の小さなロゴ。最後の「.」だけ山吹色にする */
+.logo {
+  font-family: var(--font-latin);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+.logo b {
+  color: var(--accent-2);
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+  font-family: var(--font-latin);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--foreground);
+}
+.nav a {
+  position: relative;
+  padding-block: 4px;
+}
+/* カーソルを乗せたときと、今いるページで、下線が左から伸びる */
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--accent);
+  transition: right 0.25s;
+}
+.nav a:hover::after,
+.nav a[aria-current="page"]::after {
+  right: 0;
+}
+.nav small {
+  margin-left: 6px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.menuButton {
+  display: none;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+}
+.menuButton:hover {
+  background: var(--paper);
+}
+.menuButton svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* スマートフォンで開くメニュー */
+.mobileMenu {
+  border-bottom: 1px solid var(--rule);
+  background: var(--background);
+}
+.mobileMenu nav {
+  display: grid;
+  padding-block: 8px 20px;
+}
+.mobileMenu a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-latin);
+  font-weight: 700;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+.mobileMenu a span {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+/* 記事ページで、読み進めた割合を示す山吹色の線 */
+.progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent-2);
+  transform-origin: left;
+}
+
+@media (max-width: 800px) {
+  .nav {
+    display: none;
+  }
+  .menuButton {
+    display: inline-grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: none;
+  }
+  .nav a::after {
+    transition: none;
+  }
+}

@@ -16,74 +16,158 @@
 }
 
 /* ===== 色のルール =====
+   配色のテーマは「藍染」。藍（--accent）を主役に、山吹（--accent-2）を差し色にしている。
    ここで色に名前を付け、各部品では名前で使う。色を変えたいときはここだけ直す。 */
-
-/* 配色のテーマは「藍染」。日本の藍色を主役に、からし色（山吹）を差し色にしている。 */
 
 /* ライトモード（標準） */
 :root {
   color-scheme: light;
-  --background: #f4f5f7; /* ページの背景：わずかに青みのある淡いグレー */
-  --surface: #ffffff; /* カードなど、背景から一段浮かせる面 */
-  --foreground: #14213a; /* 本文：藍に近い濃紺 */
-  --muted: #56617a; /* 日付や説明文などの補足 */
-  --border: #dde1e8; /* 区切り線や枠 */
-  --accent: #1f4e79; /* 藍：リンクやボタンなどの主な色 */
-  --accent-2: #c08a1e; /* 山吹：線や印に使う差し色（文字には使わない） */
-  --accent-soft: #e3eaf3; /* 藍の薄い背景（タグなど） */
-  --code-bg: #eef1f5; /* コードの背景 */
+  --background: #ffffff; /* ページの背景 */
+  --paper: #f4f6f9; /* 少しだけ色の付いた面（ボタンを押す前の背景など） */
+  --foreground: #0f1a2e; /* 見出しや強調する文字（墨色に近い濃紺） */
+  --text: #2a3448; /* 本文 */
+  --muted: #5d6679; /* 日付や説明文などの補足 */
+  --border: #e3e6ec; /* 細い区切り線 */
+  --rule: #0f1a2e; /* 見出しの下などの、はっきりした区切り線 */
+  --accent: #1f4e79; /* 藍：リンクや、カーソルを乗せたときの色 */
+  --on-accent: #ffffff; /* 藍の上に乗せる文字 */
+  --accent-2: #b8841a; /* 山吹：線や印に使う差し色（文字には使わない） */
+  --band: #17385a; /* 制作実績の欄の、画面幅いっぱいの藍色 */
+  --band-foreground: #ffffff;
+  --band-muted: #b9c9de;
+  --band-line: rgba(255, 255, 255, 0.18);
+  --header-bg: rgba(255, 255, 255, 0.88);
+  --code-bg: #0f1a2e; /* コードは、ライトモードでも暗い背景で表示する */
+
+  /* トップページのキャンプの景色（朝） */
+  --camp-sky: #e6eef2;
+  --camp-mountain: #d5e0e9;
+  --camp-pine-1: #bccdd5;
+  --camp-pine-2: #9fb7c2;
+  --camp-ground: #8ea7b4;
+  --camp-orb: #e7b04a; /* 朝日 */
+  --camp-orb-glow: rgba(231, 176, 74, 0.3);
+  --tent: #d39b32;
+  --tent-shade: rgba(0, 0, 0, 0.14);
+  --tent-door: #8e6218;
+  --log: #5b4632;
+  --fire-glow: rgba(255, 170, 60, 0.28);
+  --smoke: rgba(110, 124, 140, 0.22);
+  --spark: 240, 150, 50; /* 火の粉の色（canvas で使うため R, G, B の形） */
+  --stars: 0; /* 1 のとき夜空に星を描く */
+  --flame-1: #ef7d26;
+  --flame-2: #f6b443;
+  --flame-3: #fff0b3;
+  --works-tree: rgba(4, 14, 28, 0.3); /* 制作実績の欄の木々のシルエット */
 }
 
 /* ダークモード：ボタンでダークを選んだとき */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --background: #0d1526;
-  --surface: #131d33;
+  --background: #0b111d;
+  --paper: #111a2a;
   --foreground: #eef1f7;
-  --muted: #a0aac0;
-  --border: #24304a;
-  --accent: #86b3e0;
+  --text: #d0d7e4;
+  --muted: #98a3b8;
+  --border: #222d42;
+  --rule: #eef1f7;
+  --accent: #8cb6e2;
+  --on-accent: #0b111d;
   --accent-2: #e0b04a;
-  --accent-soft: #1c2c4a;
-  --code-bg: #101a2e;
+  --band: #132a4a;
+  --band-foreground: #eef1f7;
+  --band-muted: #a9bad3;
+  --band-line: rgba(255, 255, 255, 0.14);
+  --header-bg: rgba(11, 17, 29, 0.86);
+  --code-bg: #070c16;
+
+  /* 夜のキャンプ */
+  --camp-sky: #0a1220;
+  --camp-mountain: #111c2e;
+  --camp-pine-1: #142237;
+  --camp-pine-2: #182a43;
+  --camp-ground: #1c3150;
+  --camp-orb: #ece3c8; /* 月 */
+  --camp-orb-glow: rgba(236, 227, 200, 0.16);
+  --tent: #8f6726;
+  --tent-shade: rgba(0, 0, 0, 0.3);
+  --tent-door: #ffcf6b; /* テントの中のランタンの明かり */
+  --log: #3a2c20;
+  --fire-glow: rgba(255, 150, 50, 0.4);
+  --smoke: rgba(200, 210, 230, 0.06);
+  --spark: 255, 180, 80;
+  --stars: 1;
+  --works-tree: rgba(0, 0, 0, 0.35);
 }
 
-/* ダークモード：ボタンで何も選んでおらず、OS の設定がダークのとき */
+/* ダークモード：ボタンで何も選んでおらず、OS の設定がダークのとき（上と同じ値） */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --background: #0d1526;
-    --surface: #131d33;
+    --background: #0b111d;
+    --paper: #111a2a;
     --foreground: #eef1f7;
-    --muted: #a0aac0;
-    --border: #24304a;
-    --accent: #86b3e0;
+    --text: #d0d7e4;
+    --muted: #98a3b8;
+    --border: #222d42;
+    --rule: #eef1f7;
+    --accent: #8cb6e2;
+    --on-accent: #0b111d;
     --accent-2: #e0b04a;
-    --accent-soft: #1c2c4a;
-    --code-bg: #101a2e;
+    --band: #132a4a;
+    --band-foreground: #eef1f7;
+    --band-muted: #a9bad3;
+    --band-line: rgba(255, 255, 255, 0.14);
+    --header-bg: rgba(11, 17, 29, 0.86);
+    --code-bg: #070c16;
+
+    --camp-sky: #0a1220;
+    --camp-mountain: #111c2e;
+    --camp-pine-1: #142237;
+    --camp-pine-2: #182a43;
+    --camp-ground: #1c3150;
+    --camp-orb: #ece3c8;
+    --camp-orb-glow: rgba(236, 227, 200, 0.16);
+    --tent: #8f6726;
+    --tent-shade: rgba(0, 0, 0, 0.3);
+    --tent-door: #ffcf6b;
+    --log: #3a2c20;
+    --fire-glow: rgba(255, 150, 50, 0.4);
+    --smoke: rgba(200, 210, 230, 0.06);
+    --spark: 255, 180, 80;
+    --stars: 1;
+    --works-tree: rgba(0, 0, 0, 0.35);
   }
 }
 
-/* 上の色とフォントを、Tailwind のクラス名（bg-surface、text-muted など）で使えるようにする */
+/* 上の色とフォントを、Tailwind のクラス名（text-muted、border-border など）で使えるようにする */
 @theme inline {
   --color-background: var(--background);
-  --color-surface: var(--surface);
+  --color-paper: var(--paper);
   --color-foreground: var(--foreground);
+  --color-text: var(--text);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-rule: var(--rule);
   --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
   --color-accent-2: var(--accent-2);
-  --color-accent-soft: var(--accent-soft);
-  /* 英数字は Geist、日本語は Noto Sans JP で表示する */
-  --font-sans: var(--font-geist-sans), var(--font-noto-sans-jp), sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* 欧文の見出し用、和文の見出し用、本文用、コード用の4種類のフォント */
+  --font-latin: var(--font-inter-tight), var(--font-noto-sans-jp), sans-serif;
+  --font-display: var(--font-zen-kaku), var(--font-noto-sans-jp), sans-serif;
+  --font-sans: var(--font-noto-sans-jp), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
 /* ===== 文字の基本ルール ===== */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text);
   font-family: var(--font-sans);
   line-height: 1.85;
   /* 日本語の文章は、文字の間隔を少し空けると読みやすくなる */
@@ -94,9 +178,10 @@ body {
 h1,
 h2,
 h3 {
+  color: var(--foreground);
   font-feature-settings: "palt";
-  letter-spacing: 0.01em;
   line-height: 1.4;
+  text-wrap: balance;
 }
 
 /* 文章の最後の行に1文字だけ残るような、不自然な改行を減らす */
@@ -106,72 +191,124 @@ p {
 
 /* マウスで文字を選んだときの色 */
 ::selection {
-  background: var(--accent-soft);
-  color: var(--foreground);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 /* キーボード操作で選択中の場所を分かりやすくする */
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 2px;
 }
 
-/* ===== 記事本文（prose）の色 =====
+/* スクロールして画面に入るとき、ふわっと持ち上がる演出（class="reveal" を付けた要素）。
+   スクロールの位置に連動させているので、対応していないブラウザでは最初から普通に表示される。 */
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 45%;
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0.15;
+    transform: translateY(36px);
+  }
+}
+
+/* 動きを減らす設定の人には、なめらかなスクロールや演出を止める */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    animation: none;
+  }
+}
+
+/* ===== 記事本文（prose）=====
    @tailwindcss/typography の色を、このサイトの色のルールに合わせる。
    ダークモードでも自動で切り替わる。 */
 .prose {
-  --tw-prose-body: var(--foreground);
+  --tw-prose-body: var(--text);
   --tw-prose-headings: var(--foreground);
   --tw-prose-lead: var(--muted);
   --tw-prose-links: var(--accent);
   --tw-prose-bold: var(--foreground);
   --tw-prose-counters: var(--muted);
-  --tw-prose-bullets: var(--muted);
+  --tw-prose-bullets: var(--accent-2);
   --tw-prose-hr: var(--border);
   --tw-prose-quotes: var(--foreground);
-  --tw-prose-quote-borders: var(--border);
+  --tw-prose-quote-borders: var(--rule);
   --tw-prose-captions: var(--muted);
   --tw-prose-code: var(--foreground);
-  --tw-prose-pre-code: var(--foreground);
+  --tw-prose-pre-code: #e6ecf5;
   --tw-prose-pre-bg: var(--code-bg);
   --tw-prose-th-borders: var(--border);
   --tw-prose-td-borders: var(--border);
-  line-height: 1.95;
+  font-size: 17px;
+  line-height: 2;
+  counter-reset: section;
 }
 
-/* ===== 記事内のコード ===== */
-
-/* コードブロック（rehype-pretty-code が出力する部分） */
-[data-rehype-pretty-code-figure] pre {
-  border: 1px solid var(--border);
-  border-radius: 0.25rem;
-  background: var(--code-bg);
-  font-size: 0.875rem;
-  line-height: 1.75;
-  letter-spacing: 0;
+/* 大見出しには「01」「02」…の番号を自動で付ける（目次の番号と対応する） */
+.prose h2 {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 2.6em;
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  line-height: 1.5;
+  scroll-margin-top: 100px;
+  counter-increment: section;
 }
-
-/* コードの文字色は、ライト用とダーク用の2つの配色を表示モードに合わせて切り替える */
-[data-rehype-pretty-code-figure] code span {
-  color: var(--shiki-light);
-}
-:root[data-theme="dark"] [data-rehype-pretty-code-figure] code span {
-  color: var(--shiki-dark);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) [data-rehype-pretty-code-figure] code span {
-    color: var(--shiki-dark);
-  }
+.prose h2::before {
+  content: counter(section, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--accent-2);
 }
 
 /* 文中のコード（`npm run dev` のような部分） */
 .prose :not(pre) > code {
   border: 1px solid var(--border);
-  border-radius: 0.2rem;
-  background: var(--code-bg);
+  border-radius: 3px;
+  background: var(--paper);
   padding: 0.1em 0.4em;
-  font-size: 0.875em;
+  font-size: 0.85em;
   font-weight: 500;
+  letter-spacing: 0;
+}
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+
+/* ===== 記事内のコードブロック（rehype-pretty-code が出力する部分） ===== */
+.prose [data-rehype-pretty-code-figure] {
+  position: relative; /* コピーボタンを右上に置くため */
+  margin-block: 1.8em;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--code-bg);
+}
+/* ```tsx title="Hello.tsx" のように書いたときのファイル名 */
+.prose [data-rehype-pretty-code-title] {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 96px 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #8c9ab3;
+}
+.prose [data-rehype-pretty-code-figure] pre {
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 18px 20px;
+  font-size: 14px;
+  line-height: 1.85;
   letter-spacing: 0;
 }

@@ -1,0 +1,45 @@
+/* トップページの制作実績の欄。ページの中で唯一、画面幅いっぱいの藍色にする */
+
+.band {
+  position: relative;
+  overflow: hidden;
+  padding-block: 112px;
+  background: var(--band);
+  color: var(--band-foreground);
+}
+
+/* 下のほうに並ぶ森のシルエット */
+.trees {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 180px;
+  pointer-events: none;
+}
+.trees path {
+  fill: var(--works-tree);
+}
+
+/* カーソルの位置に付いてくる、やわらかい光 */
+.spot {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    460px circle at var(--mx, 72%) var(--my, 40%),
+    rgba(255, 255, 255, 0.09),
+    transparent 62%
+  );
+}
+
+.inner {
+  position: relative;
+}
+
+@media (max-width: 640px) {
+  .band {
+    padding-block: 80px 140px;
+  }
+}

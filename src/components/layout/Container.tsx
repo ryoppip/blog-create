@@ -6,11 +6,7 @@ type ContainerProps = {
 };
 
 // 中身の横幅と左右の余白をそろえるための部品。
-// 画面が広くても読みやすい幅（max-w-3xl）に収め、スマートフォンでは左右に余白を取る。
+// 画面が広くても最大 1200px に収め、左右には常に 24px の余白を取る。
 export function Container({ children, className = "" }: ContainerProps) {
-  return (
-    <div className={`mx-auto w-full max-w-3xl px-4 sm:px-6 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`mx-auto w-full max-w-[1200px] px-6 ${className}`}>{children}</div>;
 }

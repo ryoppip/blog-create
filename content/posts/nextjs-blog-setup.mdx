@@ -12,7 +12,7 @@ draft: false
 
 ファイルの先頭に、記事の情報を書きます。
 
-```mdx
+```mdx title="content/posts/my-post.mdx"
 ---
 title: "記事のタイトル"
 date: "2026-11-12"
@@ -21,9 +21,9 @@ date: "2026-11-12"
 
 ## コードの表示
 
-コードには色が付きます。
+コードには色が付き、ファイル名とコピーボタンも表示されます。
 
-```tsx
+```tsx title="Hello.tsx"
 export function Hello({ name }: { name: string }) {
   return <p>こんにちは、{name}さん</p>;
 }

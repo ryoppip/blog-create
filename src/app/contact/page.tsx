@@ -1,3 +1,4 @@
+import { SectionHeading } from "@/components/common/SectionHeading";
 import { Container } from "@/components/layout/Container";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -20,15 +21,13 @@ const FORM_HEIGHT = 1200;
 export default function ContactPage() {
   return (
     <Container className="py-16 sm:py-24">
-      <h1 className="text-3xl font-bold tracking-tight">Contact</h1>
-      <p className="mt-4 text-muted">
-        お仕事のご相談や記事へのご感想など、お気軽にお送りください。
-      </p>
+      <SectionHeading as="h1" title="Contact" ja="お問い合わせ" />
+      <p className="mt-8 text-muted">記事へのご感想やご質問、制作についてのご相談など、お気軽にお送りください。</p>
 
       {/* iframe は、ほかのサイトのページを枠の中に表示するタグ。
           ?embedded=true を付けると、Google フォームが埋め込み用の表示になる。
           Google フォームはダークモードに対応していないため、枠の背景は常に白にしている。 */}
-      <div className="mt-10 overflow-hidden rounded border border-border bg-white">
+      <div className="mt-10 max-w-[760px] overflow-hidden rounded border border-border bg-white">
         <iframe
           src={`${FORM_URL}?embedded=true`}
           title="お問い合わせフォーム"

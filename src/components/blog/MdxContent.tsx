@@ -1,11 +1,12 @@
 import { MDXRemote } from "next-mdx-remote-client/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import type { Options as PrettyCodeOptions } from "rehype-pretty-code";
+import { rehypeSectionIds } from "@/lib/rehype-section-ids";
+import { CodeBlock } from "./CodeBlock";
 
-// コードの色付けの設定。ライト用とダーク用の2つの配色を出力し、
-// どちらを使うかは globals.css が表示モードに合わせて切り替える。
+// コードの色付けの設定。コードはライトモードでも暗い背景で表示するため、暗い背景用の配色だけを使う。
 const prettyCodeOptions: PrettyCodeOptions = {
-  theme: { light: "github-light", dark: "github-dark" },
+  theme: "github-dark",
   // 背景色は配色のものを使わず、globals.css の --code-bg を使う
   keepBackground: false,
 };
@@ -18,16 +19,19 @@ export async function MdxContent({ source }: { source: string }) {
   "use cache";
 
   return (
-    // 本文の色は globals.css の .prose で、このサイトの色のルールに合わせている
-    <div className="prose max-w-none prose-code:before:content-none prose-code:after:content-none">
+    // 本文の色や見出しの番号は globals.css の .prose で、このサイトのルールに合わせている
+    <div className="prose max-w-none">
       <MDXRemote
         source={source}
+        // コードブロック（<pre>）を、コピーボタン付きの部品に置き換える
+        components={{ pre: CodeBlock }}
         options={{
           // 記事内での import / export を禁止する（記事は文章とコードの表示だけに使う）
           disableImports: true,
           disableExports: true,
           mdxOptions: {
-            rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
+            // 大見出しに目次用の id を付けてから、コードに色を付ける
+            rehypePlugins: [rehypeSectionIds, [rehypePrettyCode, prettyCodeOptions]],
           },
         }}
       />

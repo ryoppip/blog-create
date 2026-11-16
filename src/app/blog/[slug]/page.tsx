@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArticleToc } from "@/components/blog/ArticleToc";
 import { MdxContent } from "@/components/blog/MdxContent";
-import { TagList } from "@/components/common/TagList";
 import { Container } from "@/components/layout/Container";
+import { siteConfig } from "@/config/site";
+import { profile } from "@/data/profile";
 import { formatDate } from "@/lib/date";
 import { pageMetadata } from "@/lib/metadata";
-import { getAllPosts, getPostBySlug } from "@/lib/posts";
+import { getAllPosts, getHeadings, getNextPost, getPostBySlug } from "@/lib/posts";
+import styles from "./article.module.css";
 
 // 実在する記事はすべて下の generateStaticParams で事前生成されるので、移動は速いまま。
 // 事前生成されていないURLでは表示を待ってもよいページとして設定し、Suspense の読み込み表示を不要にする。
-// 注意：存在しない記事は本番では 404 ページの中身と noindex で返るが、HTTP ステータスは 200 になる（Next.js の仕様）。
 export const instant = false;
 
 // ビルド時に、どの記事のページを作るかを Next.js に伝える。
@@ -20,28 +22,21 @@ export function generateStaticParams() {
 }
 
 // 記事ごとにブラウザのタブのタイトルと説明文を設定する。
-export async function generateMetadata(
-  props: PageProps<"/blog/[slug]">,
-): Promise<Metadata> {
+export async function generateMetadata(props: PageProps<"/blog/[slug]">): Promise<Metadata> {
   const { slug } = await props.params;
   const post = getPostBySlug(slug);
   if (!post) return {};
 
-  const path = `/blog/${post.meta.slug}`;
   const base = pageMetadata({
     title: post.meta.title,
     description: post.meta.description || undefined,
-    path,
+    path: `/blog/${post.meta.slug}`,
   });
 
   return {
     ...base,
     // SNS 用の情報を「記事」として上書きし、公開日も伝える
-    openGraph: {
-      ...base.openGraph,
-      type: "article",
-      publishedTime: post.meta.date,
-    },
+    openGraph: { ...base.openGraph, type: "article", publishedTime: post.meta.date },
   };
 }
 
@@ -55,29 +50,71 @@ export default async function PostPage(props: PageProps<"/blog/[slug]">) {
   if (!post) notFound();
 
   const { meta, content } = post;
+  const next = getNextPost(meta.slug);
 
   return (
-    <Container className="py-16 sm:py-24">
-      <article>
-        <header className="border-b border-border pb-8">
-          <time dateTime={meta.date} className="text-sm text-muted">
-            {formatDate(meta.date)}
-          </time>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            {meta.title}
-          </h1>
-          <TagList tags={meta.tags} />
+    <article className={styles.article}>
+      <Container>
+        <Link href="/blog" className={styles.back}>
+          <span aria-hidden="true">←</span>Journal
+        </Link>
+
+        <header className={styles.head}>
+          {meta.tags.length > 0 && (
+            <div className={styles.tags}>
+              {meta.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+          )}
+          <h1 className={styles.title}>{meta.title}</h1>
         </header>
-        <div className="mt-10">
-          <MdxContent source={content} />
+
+        <dl className={styles.meta}>
+          <div>
+            <dt>公開日</dt>
+            <dd>
+              <time dateTime={meta.date}>{formatDate(meta.date)}</time>
+            </dd>
+          </div>
+          <div>
+            <dt>読了時間</dt>
+            <dd>約{meta.minutes}分</dd>
+          </div>
+          <div>
+            <dt>著者</dt>
+            <dd>{siteConfig.author}</dd>
+          </div>
+        </dl>
+
+        <div className={styles.body}>
+          <ArticleToc headings={getHeadings(content)} />
+          <div>
+            <MdxContent source={content} />
+
+            <div className={styles.end}>
+              <div className={styles.author}>
+                <div>
+                  <strong>{siteConfig.author}</strong>
+                  <p>{profile.intro}</p>
+                </div>
+                <Link href="/about" className={styles.authorLink}>
+                  プロフィール<span aria-hidden="true">→</span>
+                </Link>
+              </div>
+              {next && (
+                <Link href={`/blog/${next.slug}`} className={styles.next}>
+                  <span className={styles.nextLabel}>NEXT ARTICLE</span>
+                  <h2 className={styles.nextTitle}>
+                    {next.title}
+                    <span aria-hidden="true">→</span>
+                  </h2>
+                </Link>
+              )}
+            </div>
+          </div>
         </div>
-      </article>
-      <Link
-        href="/blog"
-        className="mt-16 inline-block text-sm text-accent underline underline-offset-4"
-      >
-        ← 記事一覧へ戻る
-      </Link>
-    </Container>
+      </Container>
+    </article>
   );
 }
