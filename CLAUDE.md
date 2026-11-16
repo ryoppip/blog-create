@@ -33,7 +33,7 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 - 配色のテーマは「藍染」：藍（`accent`）が主な色、山吹（`accent-2`）は線や印だけに使う差し色（コントラストが足りないため文字には使わない）。画面幅いっぱいの藍色はトップページの制作実績の欄（`WorksBand`）だけに使う。
 - トップページのロゴの背景はキャンプの景色（`src/components/home/CampScene.tsx`）。ライトモードは朝（朝日、煙）、ダークモードは夜（月、星、光るテント、火の粉）。木々の形は `src/lib/trees.ts` でビルド時に計算し、星と火の粉は canvas、奥行きはスクロールに合わせて動かす。
 - 色はすべて `src/app/globals.css` の CSS 変数で定義する（キャンプの景色の色も `--camp-〇〇` などで定義）。Tailwind クラス（`text-muted`、`border-border` など）か、CSS Modules の `var(--〇〇)` で使い、部品に色を直接書かない。例外は Google フォームを囲む白い枠と、常に暗い背景のコードブロック内の文字色。
-- 部品の見た目は、同じフォルダの CSS Modules（`〇〇.module.css`）に書く。小さな調整は Tailwind クラスでよい。
+- 部品の見た目は、同じフォルダの CSS Modules（`〇〇.module.css`）に書く。小さな調整は Tailwind クラスでよい。`next.config.ts` の Turbopack の設定で、Tailwind の処理から `*.module.css` を外している。外さないと CSS Modules のクラス名がすべて `undefined` になり、見た目が当たらない（ビルドは成功するので気づきにくい）。
 - フォント（すべて `next/font`）：欧文の見出しが Inter Tight（`font-latin`）、和文の見出しが Zen Kaku Gothic New（`font-display`）、本文が Noto Sans JP（`font-sans`）、コードとラベルが JetBrains Mono（`font-mono`）。
 - ダークモード：`html` の `data-theme`（`light`/`dark`）で切り替える。未設定のときは OS の設定に従う。ちらつき防止のスクリプトは `src/lib/theme.ts`、切り替えボタンは `src/components/layout/ThemeToggle.tsx`。Tailwind の `dark:` クラスは `globals.css` の `@custom-variant dark` で同じ条件に合わせている。canvas の色は CSS 変数（`--spark`、`--stars`）を読んで切り替える。
 - 動き：スクロールで現れる演出は `class="reveal"`（`globals.css`、スクロール連動のため非対応ブラウザでは普通に表示）。すべての動きは `prefers-reduced-motion` で止まるようにする。
