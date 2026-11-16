@@ -34,15 +34,24 @@ export type Heading = {
 
 type RawFrontmatter = Partial<Record<keyof Omit<PostMeta, "slug" | "minutes">, unknown>>;
 
-// コードブロック（``` で囲んだ部分）を除いた本文の行を返す
+// コードブロック（``` や ~~~ で囲んだ部分）を除いた本文の行を返す。
+// ```` のように4つ以上で囲んだ中に ``` を書いた場合も、外側の囲みが閉じるまでをコードとして扱う。
 function proseLines(content: string) {
-  let inCode = false;
+  let fence: string | null = null; // 今いるコードブロックを開いた記号（例："```"）。外にいるときは null
   return content.split("\n").filter((line) => {
-    if (line.trimStart().startsWith("```")) {
-      inCode = !inCode;
-      return false;
+    const marker = line.trimStart().match(/^(`{3,}|~{3,})/)?.[1];
+    if (fence === null) {
+      if (marker) {
+        fence = marker;
+        return false;
+      }
+      return true;
     }
-    return !inCode;
+    // 開いたときと同じ記号で、同じ数以上の行が来たらコードブロックを閉じる
+    if (marker && marker[0] === fence[0] && marker.length >= fence.length && line.trim() === marker) {
+      fence = null;
+    }
+    return false;
   });
 }
 
