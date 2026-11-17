@@ -38,7 +38,7 @@ export function Masthead({ latestDate }: { latestDate?: string }) {
       <Container>
         <div className={styles.info}>
           <p>
-            Web開発を学ぶ {siteConfig.author} の技術ブログです。学習の記録、技術記事、制作したアプリケーションを発信しています。
+            Web開発を学ぶITエンジニアの技術ブログです。学習の記録、技術記事、制作したアプリケーションを発信しています。
           </p>
           <dl>
             <dt>WRITER</dt>
