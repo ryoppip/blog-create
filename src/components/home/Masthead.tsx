@@ -37,8 +37,10 @@ export function Masthead({ latestDate }: { latestDate?: string }) {
 
       <Container>
         <div className={styles.info}>
-          <p>
-            Web開発を学ぶITエンジニアの技術ブログです。学習の記録、技術記事、制作したアプリケーションを発信しています。
+          {/* スマートフォンでは、1文ずつ改行して読みやすくする（Masthead.module.css の .sentence） */}
+          <p className={styles.intro}>
+            <span className={styles.sentence}>Web開発を学ぶITエンジニアの技術ブログです。</span>
+            <span className={styles.sentence}>学習の記録、技術記事、制作したアプリケーションを発信しています。</span>
           </p>
           {/* PCでは紹介文の横に並べる。スマートフォンでは隠し、記事一覧の下の SiteFacts で表示する */}
           {siteFacts(latestDate).map((fact) => (

@@ -87,6 +87,23 @@
   max-width: 30em;
   font-size: 15.5px;
 }
+
+/* 紹介文。スマートフォンでは1文ずつ改行し、行間と文字の間隔を少し広げる */
+@media (max-width: 640px) {
+  .info .intro {
+    display: grid;
+    gap: 6px;
+    padding-top: 24px;
+    font-size: 15px;
+    line-height: 2;
+    letter-spacing: 0.04em;
+    /* 対応しているブラウザでは、単語の途中ではなく文節の区切りで折り返す */
+    word-break: auto-phrase;
+  }
+  .sentence {
+    display: block;
+  }
+}
 .info dt,
 .mobileFacts dt {
   font-family: var(--font-mono);
