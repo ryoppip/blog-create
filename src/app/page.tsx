@@ -1,7 +1,7 @@
 import { JournalIndex } from "@/components/blog/JournalIndex";
 import { SectionHeading } from "@/components/common/SectionHeading";
 import { ContactLink } from "@/components/home/ContactLink";
-import { Masthead } from "@/components/home/Masthead";
+import { Masthead, SiteFacts } from "@/components/home/Masthead";
 import { WorksBand } from "@/components/home/WorksBand";
 import { Container } from "@/components/layout/Container";
 import { ProfileSummary } from "@/components/profile/ProfileSummary";
@@ -34,6 +34,8 @@ export default function Home() {
             className="reveal"
           />
           <JournalIndex posts={latest} tags={getTagCounts(latest)} />
+          {/* 著者、得意分野、最終更新日（スマートフォンでだけ、ここに表示する） */}
+          <SiteFacts latestDate={posts[0]?.date} />
         </Container>
       </section>
 

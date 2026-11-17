@@ -87,19 +87,43 @@
   max-width: 30em;
   font-size: 15.5px;
 }
-.info dt {
+.info dt,
+.mobileFacts dt {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.06em;
   color: var(--muted);
 }
-.info dd {
+.info dd,
+.mobileFacts dd {
   margin: 0;
   font-family: var(--font-latin);
   font-weight: 600;
   font-size: 17px;
   letter-spacing: 0;
   color: var(--foreground);
+}
+
+/* 著者、得意分野、最終更新日：スマートフォンではロゴの下から外し、記事一覧の下に表示する */
+.mobileFacts {
+  display: none;
+}
+@media (max-width: 640px) {
+  .desktopOnly {
+    display: none !important;
+  }
+  .mobileFacts {
+    display: grid;
+    margin-top: 48px;
+    border-top: 1px solid var(--rule);
+  }
+  .mobileFacts dl {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
 }
 
 @keyframes rise {

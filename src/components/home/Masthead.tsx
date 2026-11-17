@@ -40,20 +40,38 @@ export function Masthead({ latestDate }: { latestDate?: string }) {
           <p>
             Web開発を学ぶITエンジニアの技術ブログです。学習の記録、技術記事、制作したアプリケーションを発信しています。
           </p>
-          <dl>
-            <dt>WRITER</dt>
-            <dd>{siteConfig.author}</dd>
-          </dl>
-          <dl>
-            <dt>FOCUS</dt>
-            <dd>{siteConfig.focus}</dd>
-          </dl>
-          <dl>
-            <dt>LATEST</dt>
-            <dd>{latestDate ? `${formatDate(latestDate)} 更新` : "—"}</dd>
-          </dl>
+          {/* PCでは紹介文の横に並べる。スマートフォンでは隠し、記事一覧の下の SiteFacts で表示する */}
+          {siteFacts(latestDate).map((fact) => (
+            <dl key={fact.label} className={styles.desktopOnly}>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </dl>
+          ))}
         </div>
       </Container>
     </section>
+  );
+}
+
+// 著者、得意分野、最終更新日の3項目。PC用とスマートフォン用で同じ内容を使う
+function siteFacts(latestDate?: string) {
+  return [
+    { label: "WRITER", value: siteConfig.author },
+    { label: "FOCUS", value: siteConfig.focus },
+    { label: "LATEST", value: latestDate ? `${formatDate(latestDate)} 更新` : "—" },
+  ];
+}
+
+// スマートフォンでだけ表示する3項目。トップページの記事一覧の下に置く
+export function SiteFacts({ latestDate }: { latestDate?: string }) {
+  return (
+    <div className={styles.mobileFacts}>
+      {siteFacts(latestDate).map((fact) => (
+        <dl key={fact.label}>
+          <dt>{fact.label}</dt>
+          <dd>{fact.value}</dd>
+        </dl>
+      ))}
+    </div>
   );
 }
