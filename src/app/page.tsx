@@ -25,7 +25,8 @@ export default function Home() {
     <>
       <Masthead latestDate={posts[0]?.date} />
 
-      <section className="py-28 max-sm:py-20">
+      {/* スマートフォンでは、ロゴの下の紹介文との間を詰めるため上の余白を小さくする */}
+      <section className="py-28 max-sm:pt-10 max-sm:pb-20">
         <Container>
           <SectionHeading
             title="Journal"
