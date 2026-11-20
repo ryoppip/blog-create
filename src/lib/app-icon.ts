@@ -1,35 +1,28 @@
-// サイトのアイコン「テントくん」の絵柄（SVG）。
+// サイトのアイコン（家紋風「白地に藍」）の絵柄（SVG）。
 // ブラウザのタブ、iPhone・Android のホーム画面のアイコンは、すべてこの絵柄から作る（src/app/icon.tsx、apple-icon.tsx）。
-// 朝の空と山を背景に、顔の付いた山吹色のテントが座っている。
+// 白地に藍色の丸い枠。中に左右の山とテントを左右対称に組み、下に丘、丘の上に山吹色の焚き火の点を置いている。
 
 const APP_ICON_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
   <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#dce8f1"/>
-      <stop offset="1" stop-color="#f3efe4"/>
-    </linearGradient>
+    <!-- 丘を、枠の内側の丸に沿って切り抜くための形 -->
+    <clipPath id="ring-inner"><circle cx="90" cy="90" r="56"/></clipPath>
   </defs>
-  <rect width="180" height="180" fill="url(#sky)"/>
-  <circle cx="140" cy="44" r="28" fill="#e7b04a" fill-opacity="0.2"/>
-  <circle cx="140" cy="44" r="18" fill="#e7b04a"/>
-  <path d="M0 120 L40 76 L70 104 L104 64 L180 126 V180 H0 Z" fill="#a9bfd3"/>
-  <path d="M104 64 L118 76 L110 80 L100 74 L92 78 Z" fill="#ffffff" fill-opacity="0.85"/>
-  <path d="M0 150 C 60 138, 120 140, 180 150 V180 H0 Z" fill="#7f9db3"/>
-  <path d="M40 152 L90 76 L140 152 Z" fill="#e0a83a"/>
-  <path d="M90 76 L140 152 H118 Z" fill="#000000" fill-opacity="0.12"/>
-  <line x1="90" y1="78" x2="86" y2="67" stroke="#5b4632" stroke-width="3" stroke-linecap="round"/>
-  <ellipse cx="79" cy="118" rx="4.5" ry="6" fill="#3b2412"/>
-  <ellipse cx="101" cy="118" rx="4.5" ry="6" fill="#3b2412"/>
-  <circle cx="80.5" cy="116" r="1.5" fill="#ffffff"/>
-  <circle cx="102.5" cy="116" r="1.5" fill="#ffffff"/>
-  <ellipse cx="69" cy="129" rx="6" ry="4" fill="#ff7a7a" fill-opacity="0.5"/>
-  <ellipse cx="111" cy="129" rx="6" ry="4" fill="#ff7a7a" fill-opacity="0.5"/>
-  <path d="M84 128 Q 90 134 96 128" fill="none" stroke="#3b2412" stroke-width="2.6" stroke-linecap="round"/>
-  <path d="M90 136 L80 152 H100 Z" fill="#8e6218"/>
+  <rect width="180" height="180" fill="#ffffff"/>
+  <!-- 丸い枠 -->
+  <circle cx="90" cy="90" r="62" fill="none" stroke="#17385a" stroke-width="5"/>
+  <!-- 左右の山 -->
+  <path d="M40 128 L64 92 L86 128 Z" fill="#17385a"/>
+  <path d="M94 128 L116 92 L140 128 Z" fill="#17385a"/>
+  <!-- テント（白い縁取りで山と切り分け、入口を白く抜く） -->
+  <path d="M58 128 L90 56 L122 128 Z" fill="#17385a" stroke="#ffffff" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M90 94 L80 128 H100 Z" fill="#ffffff"/>
+  <!-- 丘と、焚き火の明かり -->
+  <rect x="20" y="134" width="140" height="40" fill="#17385a" clip-path="url(#ring-inner)"/>
+  <circle cx="90" cy="144" r="4" fill="#c99520"/>
 </svg>`;
 
 // 画像として読み込めるように、SVG を data URI（文字列で表した画像）に変換したもの
 export const APP_ICON_DATA_URI = `data:image/svg+xml;base64,${Buffer.from(APP_ICON_SVG).toString("base64")}`;
 
 // アイコンの背景色（ホーム画面から開いたときの起動画面の色にも使う）
-export const APP_ICON_BACKGROUND = "#dce8f1";
+export const APP_ICON_BACKGROUND = "#ffffff";
