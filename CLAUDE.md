@@ -56,7 +56,7 @@ Next.js のコードを書く前に [AGENTS.md](AGENTS.md) に従い、`node_mod
 - サイトの URL（`siteConfig.url`）は、Vercel が自動で設定する `VERCEL_PROJECT_PRODUCTION_URL` から作る。未設定の手元では `http://localhost:3000` になる。
 - ページのメタデータは `src/lib/metadata.ts` の `pageMetadata` で作る。各ページで設定しないと、共通レイアウトのサイト名が全ページの SNS 用タイトル（`og:title`）になる。
 - `src/app/sitemap.ts` と `src/app/robots.ts` は、記事一覧と `siteConfig.url` から自動で作られる。
-- サイトのアイコン（家紋風「白地に藍」：丸い枠の中に山とテント）の絵柄（SVG）は `src/lib/app-icon.ts` の1か所にある。タブと Android 用の PNG（`/icon/32`、`/icon/192`、`/icon/512`）は `src/app/icon.tsx`、iPhone 用は `src/app/apple-icon.tsx` がビルド時に作る。ホーム画面に追加したときの名前などは `src/app/manifest.ts`。
+- サイトのアイコン（家紋風「亀甲に山とテント」：藍色の地に山吹色の六角形の枠、白い山とテント）の絵柄（SVG）は `src/lib/app-icon.ts` の1か所にある。タブと Android 用の PNG（`/icon/32`、`/icon/192`、`/icon/512`）は `src/app/icon.tsx`、iPhone 用は `src/app/apple-icon.tsx` がビルド時に作る。ホーム画面に追加したときの名前などは `src/app/manifest.ts`。
 - 開発サーバーでは Google Fonts への接続に失敗し、代わりのフォントで表示されることがある（本番ビルドでは正しく組み込まれる）。
 
 ## 禁止事項
